@@ -76,5 +76,41 @@ return [
     ],
     'install' => [
         'date' => 'Fri, 23 Oct 2020 13:42:23 +0000'
+    ],
+    'system' => [
+        'default' => [
+            'web' => [
+                'unsecure' => [
+                    'base_url' => 'https://vitalii-luka.local/',
+                    'base_link_url' => '{{unsecure_base_url}}',
+                    'base_static_url' => 'https://vitalii-luka.local/static/',
+                    'base_media_url' => 'https://vitalii-luka.local/media/'
+                ],
+                'secure' => [
+                    'base_url' => 'https://vitalii-luka.local/',
+                    'base_link_url' => '{{secure_base_url}}',
+                    'base_static_url' => 'https://vitalii-luka.local/static/',
+                    'base_media_url' => 'https://vitalii-luka.local/media/'
+                ],
+            ],
+        ],
+        'websites' => [
+            'additional_website' => [
+                'web' => [
+                    'unsecure' => [
+                        'base_url' => 'https://vitalii-luka-additional.local/',
+                        'base_link_url' => 'https://vitalii-luka-additional.local/',
+                        'base_static_url' => 'https://vitalii-luka-additional.local/static/',
+                        'base_media_url' => 'https://vitalii-luka-additional.local/media/'
+                    ],
+                    'secure' => [
+                        'base_url' => 'https://vitalii-luka-additional.local/',
+                        'base_link_url' => 'https://vitalii-luka-additional.local/',
+                        'base_static_url' => 'https://vitalii-luka-additional.local/static/',
+                        'base_media_url' => 'https://vitalii-luka-additional.local/media/'
+                    ]
+                ]
+            ]
+        ]
     ]
 ];
