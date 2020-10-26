@@ -14,9 +14,9 @@ return [
         'connection' => [
             'default' => [
                 'host' => 'mysql',
-                'dbname' => 'vitalii_luka_dev_local',
-                'username' => 'vitalii_luka_dev_local',
-                'password' => 'kubsf;iufdsh;iuffdgdfg',
+                'dbname' => 'vitalii_luka_build_local',
+                'username' => 'vitalii_luka_build_local',
+                'password' => 'jks;kdhvkDJvKDJbvk/jbzv',
                 'model' => 'mysql4',
                 'engine' => 'innodb',
                 'initStatements' => 'SET NAMES utf8;',
