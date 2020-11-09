@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BRANCH='lesson-3-pipeline-deployment'
+BRANCH='name-of-you-branch'
 
 php bin/magento deploy:mode:set default
 git checkout $BRANCH
