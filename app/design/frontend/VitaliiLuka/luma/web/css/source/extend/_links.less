@@ -1,0 +1,23 @@
+& when (@media-common = true) {
+    .filter-options-content a {
+        color: @color-orange-red1;
+    }
+
+    .product-social-links {
+        .action.towishlist,
+        .action.towishlist:before,
+        .action.tocompare,
+        .action.tocompare:before {
+            color: @color-orange-red1;
+        }
+
+        .action.towishlist:hover,
+        .action.tocompare:hover {
+            color: darken(@color-orange-red1, 10%);
+        }
+    }
+
+    .product-item-actions .actions-secondary .action:before {
+        color: @color-orange-red1;
+    }
+}

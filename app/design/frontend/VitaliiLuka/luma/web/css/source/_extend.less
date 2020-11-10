@@ -1,6 +1,7 @@
 @import 'extend/_header.less';
 @import 'extend/_footer.less';
 @import 'extend/_product.less';
+@import 'extend/_links.less';
 
 //
 //  Header
@@ -9,11 +10,7 @@
 @header-panel__background-color: @color-blue3;
 @panel__background-color: @color-sky-blue1;
 
-//
-//  Toolbar
-//  _____________________________________________
-
-//  Desktop
+//  Toolbar desktop
 @navigation__background: @color-sky-blue1;
 @navigation-desktop-level0-item__color: @color-white;
 @navigation-desktop-level0-item__hover__color: @color-white;
@@ -21,7 +18,7 @@
 @submenu-desktop-item__color: @color-gray34;
 @submenu-desktop-item__hover__color: @primary__color;
 
-//  Mobile
+//  Toolbar mobile
 @submenu-item__color: @color-white;
 @_submenu-item-color: @submenu-item__color;
 @navigation-level0-item__color: @submenu-item__color;
@@ -39,7 +36,7 @@
 //  Product info
 //  _____________________________________________
 
-//  Desktop
+//  Tab desktop
 @tab-content__background-color: @color-white;
 @tab-control__background-color: @color-blue3;
 @tab-control__color: @color-white;
@@ -47,9 +44,28 @@
 @tab-control__active__background-color: @color-sky-blue1;
 @tab-control__hover__background-color: @color-sky-blue1;
 
-//  Mobile
+//  Tab mobile
 @accordion-content__background-color: @color-white;
 @accordion-control__background-color: @color-blue3;
 @accordion-control__color: @color-white;
 @accordion-control__active__background-color: @color-sky-blue1;
 @accordion-control__hover__background-color: @color-sky-blue1;
+
+//
+//  Links
+//  _____________________________________________
+
+//  Breadcrumbs
+@breadcrumbs-link__color: @color-orange-red1;
+@breadcrumbs-current__color: darken(@color-orange-red1, 20%);
+@breadcrumbs-link__hover__color: darken(@color-orange-red1, 20%);
+@breadcrumbs-link__active__color: darken(@color-orange-red1, 20%);
+
+//  Reviews
+@link__color: @color-orange-red1;
+@link__visited__color: @color-orange-red1;
+@link__hover__color: darken(@color-orange-red1, 10%);
+@link__active__color: @color-orange-red1;
+
+//  Current page
+@pager-current__color: darken(@color-orange-red1, 10%);
