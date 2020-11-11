@@ -2,6 +2,7 @@
 @import 'extend/_footer.less';
 @import 'extend/_product.less';
 @import 'extend/_links.less';
+@import 'extend/_messages.less';
 
 //
 //  Header
@@ -69,3 +70,43 @@
 
 //  Current page
 @pager-current__color: darken(@color-orange-red1, 10%);
+
+//
+//  Messages
+//  _____________________________________________
+
+@light-red23: #ffcccb;
+
+//  Error message
+@message-error__background: @light-red23;
+@message-error__color: @color-white;
+@message-error-icon__color-inner: @color-white;
+@message-error-link__color: @color-white;
+@message-error-link__color-hover: darken(@color-white, 15%);
+
+//  Success message
+@message-success__background: @color-blue3;
+@message-success__color: @color-white;
+@message-success-icon__color-inner: @color-white;
+@message-success-link__color: @color-white;
+@message-success-link__color-hover: darken(@color-white, 15%);
+
+//  Notice message
+@message-notice__color: @color-white;
+@message-notice-icon__color-inner: @color-white;
+@message-notice-link__color: @color-white;
+@message-notice-link__color-hover: darken(@color-white, 15%);
+
+//  Warning message
+@message-warning__background: @light-red23;
+@message-warning__color: @color-white;
+@message-warning-icon__color-inner: @color-white;
+@message-warning-link__color: @color-white;
+@message-warning-link__color-hover: darken(@color-white, 15%);
+
+//  Information message
+@message-info__background: @color-sky-blue1;
+@message-info__color: @color-white;
+@message-info-icon__color-inner: @color-white;
+@message-info-link__color: @color-white;
+@message-info-link__color-hover: darken(@color-white, 15%);
