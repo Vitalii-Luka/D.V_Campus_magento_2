@@ -43,7 +43,6 @@ Deployment process flow implemented in the above files:
 8) turn off maintenance (only for `deploy-full.sh`).
 
 
-
 # Local development and testing #
 
 - `deploy.sh` - deploy testing your code after deploying changes to the local server
@@ -53,14 +52,8 @@ To use this script the following environment variables must be set :
 - `BRANCH` - branch to checkout and deploy.
 
 
-
-
-
 # Compile LESS using Grunt #
 Compiles CSS files using the symlinks published for a `vitaliiluka_luma_en_us` theme:
 
 - `grunt exec:vitaliiluka_luma_en_us`
 - `grunt less:vitaliiluka_luma_en_us`
-
-
-
