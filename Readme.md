@@ -53,7 +53,7 @@ To use this script the following environment variables must be set :
 
 
 # Compile LESS using Grunt #
-Compiles CSS files using the symlinks published for a `vitaliiluka_luma_en_us` theme:
+Compiles CSS files using the symlinks published for a `vitaliiluka_luma` theme, locale `en_US` and `uk_UA`:
 
-- `grunt exec:vitaliiluka_luma_en_us`
-- `grunt less:vitaliiluka_luma_en_us`
+- `grunt exec:vitaliiluka_luma_uk_ua && grunt less:vitaliiluka_luma_uk_ua && grunt watch`
+- `grunt exec:vitaliiluka_luma_en_us && grunt less:vitaliiluka_luma_en_us && grunt watch`
