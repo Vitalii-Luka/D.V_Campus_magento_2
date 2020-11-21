@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.wrapper">
+            <block class="Magento\Cms\Block\Block" name="This-is-a-demo-store" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">This_is_a_demo_store</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
