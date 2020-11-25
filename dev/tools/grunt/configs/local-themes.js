@@ -5,7 +5,7 @@
 module.exports = {
     vitaliiluka_luma_uk_ua: {
         area: 'frontend',
-        name: 'VitaliiLuka/luma,
+        name: 'VitaliiLuka/luma',
         locale: 'uk_UA',
         files: [
             'css/styles-m',
