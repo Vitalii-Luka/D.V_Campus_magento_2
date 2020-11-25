@@ -9,5 +9,12 @@
             </block>
         </referenceContainer>
         <referenceBlock name="form.subscribe" template="VitaliiLuka_Cms::subscribe_promo.phtml"/>
+        <referenceContainer name="sidebar.additional">
+            <block class="Magento\Cms\Block\Block" name="Logo-info" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">logo_info</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     </body>
 </page>
