@@ -8,5 +8,6 @@
                 </arguments>
             </block>
         </referenceContainer>
+        <referenceBlock name="form.subscribe" template="VitaliiLuka_Cms::subscribe_promo.phtml"/>
     </body>
 </page>
