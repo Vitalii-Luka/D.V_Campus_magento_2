@@ -4,15 +4,14 @@
         <referenceContainer name="page.wrapper">
             <block class="Magento\Cms\Block\Block" name="This-is-a-demo-store" before="-">
                 <arguments>
-                    <argument name="block_id" xsi:type="string">This_is_a_demo_store</argument>
+                    <argument name="block_id" xsi:type="string">this_is_a_demo_store</argument>
                 </arguments>
             </block>
         </referenceContainer>
-        <referenceBlock name="form.subscribe" template="VitaliiLuka_Cms::subscribe_promo.phtml"/>
         <referenceContainer name="sidebar.additional">
-            <block class="Magento\Cms\Block\Block" name="Logo-info" after="-">
+            <block class="Magento\Cms\Block\Block" name="New-Releases" after="-">
                 <arguments>
-                    <argument name="block_id" xsi:type="string">logo_info</argument>
+                    <argument name="block_id" xsi:type="string">new_releases</argument>
                 </arguments>
             </block>
         </referenceContainer>
