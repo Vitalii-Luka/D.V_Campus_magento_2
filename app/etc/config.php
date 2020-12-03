@@ -315,7 +315,6 @@ return [
         'Vertex_AddressValidationApi' => 1,
         'Vertex_AddressValidation' => 1,
         'VitaliiLuka_Cms' => 1,
-        'VitaliiLuka_Newsletter' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
