@@ -95,6 +95,18 @@ return [
             ],
         ],
         'websites' => [
+            'base' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'uk_UA'
+                    ]
+                ],
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 4
+                    ]
+                ]
+            ],
             'additional_website' => [
                 'web' => [
                     'unsecure' => [
