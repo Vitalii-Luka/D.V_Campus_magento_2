@@ -316,6 +316,7 @@ return [
         'Vertex_AddressValidation' => 1,
         'VitaliiLuka_Cms' => 1,
         'VitaliiLuka_ControllerDemo' => 1,
+        'VitaliiLuka_RegularCustomer' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
