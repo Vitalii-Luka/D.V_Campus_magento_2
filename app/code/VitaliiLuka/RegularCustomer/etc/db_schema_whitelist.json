@@ -1,0 +1,27 @@
+{
+    "vitalii_luka_regular_customer_request": {
+        "column": {
+            "discount_request_id": true,
+            "customer_id": true,
+            "name": true,
+            "email": true,
+            "website_id": true,
+            "status": true,
+            "admin_user_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_CUSTOMER_ID": true,
+            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_WEBSITE_ID": true,
+            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_ADMIN_USER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_EMAIL_WEBSITE_ID": true,
+            "FK_21990CEFD4E1C3D4ACE2B1661B3811A4": true,
+            "VITALII_LUKA_PERSONAL_DISCOUNT_REQUEST_WS_ID_M2_STORE_WS_WS_ID": true,
+            "FK_09031941D5C8F0F60EC1EF535963777C": true
+        }
+    }
+}
