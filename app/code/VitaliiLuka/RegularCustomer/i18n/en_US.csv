@@ -1,10 +1,16 @@
+pending,pending
+approved,approved
+declined,declined
 "You request for product %1 was accepted!","You request for product %1 was accepted!"
+"Your request can't be sent. Please, contact us if you see this message.","Your request can't be sent. Please, contact us if you see this message."
 "Participate in the program","Participate in the program"
 "Discount Request","Discount Request"
 Name,Name
 Email,Email
 "Request a Discount","Request a Discount"
+"Request status:","Request status:"
+"No discount request","No discount request"
 Success,Success
 Error,Error
-"Your request can't be sent. Please, contact us if you see this message.","Your request can't be sent. Please, contact us if you see this message."
 "Loyalty program for Regular Customers","Loyalty program for Regular Customers"
+"Personal Discount","Personal Discount"
