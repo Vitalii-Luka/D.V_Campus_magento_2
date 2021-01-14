@@ -314,6 +314,7 @@ return [
         'Vertex_Tax' => 1,
         'Vertex_AddressValidationApi' => 1,
         'Vertex_AddressValidation' => 1,
+        'VitaliiLuka_Catalog' => 1,
         'VitaliiLuka_Cms' => 1,
         'VitaliiLuka_ControllerDemo' => 1,
         'VitaliiLuka_RegularCustomer' => 1,
