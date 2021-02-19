@@ -35,6 +35,11 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
     private $storeManager;
 
     /**
+     * @var \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     */
+    private $formKeyValidator;
+
+    /**
      * @var \Psr\Log\LoggerInterface $logger
      */
     private $logger;
@@ -46,6 +51,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource
      * @param \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -54,6 +60,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource,
         \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -61,6 +68,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         $this->discountRequestResource = $discountRequestResource;
         $this->discountRequestFactory = $discountRequestFactory;
         $this->storeManager = $storeManager;
+        $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
     }
 
@@ -77,6 +85,10 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         // @TODO: add Google Recaptcha to the form
 
         try {
+            if (!$this->formKeyValidator->validate($this->request)) {
+                throw new \InvalidArgumentException('Form key is not valid');
+            }
+
             /** @var DiscountRequest $discountRequest */
             $discountRequest = $this->discountRequestFactory->create();
             $discountRequest->setName($this->request->getParam('name'))
