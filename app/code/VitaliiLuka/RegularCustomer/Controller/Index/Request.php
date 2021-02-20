@@ -40,6 +40,11 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
     private $formKeyValidator;
 
     /**
+     * @var \Magento\Customer\Model\Session $customerSession
+     */
+    private $customerSession;
+
+    /**
      * @var \Psr\Log\LoggerInterface $logger
      */
     private $logger;
@@ -52,6 +57,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     * @param \Magento\Customer\Model\Session $customerSession
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -61,6 +67,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Magento\Customer\Model\Session $customerSession,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -69,6 +76,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         $this->discountRequestFactory = $discountRequestFactory;
         $this->storeManager = $storeManager;
         $this->formKeyValidator = $formKeyValidator;
+        $this->customerSession = $customerSession;
         $this->logger = $logger;
     }
 
@@ -89,11 +97,13 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
                 throw new \InvalidArgumentException('Form key is not valid');
             }
 
+            $customerId = $this->customerSession->getCustomerId() ? (int) $this->customerSession->getCustomerId() : null;
             /** @var DiscountRequest $discountRequest */
             $discountRequest = $this->discountRequestFactory->create();
             $discountRequest->setName($this->request->getParam('name'))
                 ->setEmail($this->request->getParam('email'))
                 ->setWebsiteId($this->storeManager->getStore()->getWebsiteId())
+                ->setCustomerId($customerId)
                 ->setStatus(DiscountRequest::STATUS_PENDING);
             $this->discountRequestResource->save($discountRequest);
             $message = __('You request for product %1 was accepted!', $this->request->getParam('productName'));
