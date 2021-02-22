@@ -3,6 +3,7 @@
         "column": {
             "discount_request_id": true,
             "customer_id": true,
+            "product_id": true,
             "name": true,
             "email": true,
             "website_id": true,
@@ -13,11 +14,13 @@
         },
         "index": {
             "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_CUSTOMER_ID": true,
+            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_PRODUCT_ID": true,
             "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_WEBSITE_ID": true,
             "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_ADMIN_USER_ID": true
         },
         "constraint": {
             "PRIMARY": true,
+            "FK_F139F041DF5100B9F163152535D9B6D8": true,
             "FK_21990CEFD4E1C3D4ACE2B1661B3811A4": true,
             "VITALII_LUKA_PERSONAL_DISCOUNT_REQUEST_WS_ID_M2_STORE_WS_WS_ID": true,
             "FK_09031941D5C8F0F60EC1EF535963777C": true
