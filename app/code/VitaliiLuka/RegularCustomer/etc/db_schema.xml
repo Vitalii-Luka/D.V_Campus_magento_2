@@ -41,10 +41,6 @@
         <index referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_ADMIN_USER_ID" indexType="btree">
             <column name="admin_user_id"/>
         </index>
-        <constraint xsi:type="unique" referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_EMAIL_WEBSITE_ID">
-            <column name="email"/>
-            <column name="website_id"/>
-        </constraint>
         <constraint xsi:type="foreign"
                     referenceId="FK_21990CEFD4E1C3D4ACE2B1661B3811A4"
                     table="vitalii_luka_regular_customer_request"

@@ -18,7 +18,6 @@
         },
         "constraint": {
             "PRIMARY": true,
-            "VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_EMAIL_WEBSITE_ID": true,
             "FK_21990CEFD4E1C3D4ACE2B1661B3811A4": true,
             "VITALII_LUKA_PERSONAL_DISCOUNT_REQUEST_WS_ID_M2_STORE_WS_WS_ID": true,
             "FK_09031941D5C8F0F60EC1EF535963777C": true
