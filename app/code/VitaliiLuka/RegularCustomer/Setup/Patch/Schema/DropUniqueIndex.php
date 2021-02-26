@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace VitaliiLuka\RegularCustomer\Setup\Patch\Schema;
@@ -14,6 +15,7 @@ class DropUniqueIndex implements \Magento\Framework\Setup\Patch\SchemaPatchInter
      * RemoveUniqueIndex constructor.
      * @param \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup
      */
+
     public function __construct(
         \Magento\Framework\Setup\SchemaSetupInterface $schemaSetup
     ) {
@@ -23,19 +25,14 @@ class DropUniqueIndex implements \Magento\Framework\Setup\Patch\SchemaPatchInter
     /**
      * @inheritDoc
      */
-
     public function apply(): void
     {
-            $this->schemaSetup->startSetup();
-            $this->schemaSetup->getConnection()
-                ->dropIndex(
-                    $this->schemaSetup->getTable('vitalii_luka_regular_customer_request'),
-                    $this->schemaSetup->getIndex(
-                        'website_id',
-                        'email'
-                    )
-                );
-            $this->schemaSetup->endSetup();
+        $this->schemaSetup->getConnection()->startSetup();
+        $this->schemaSetup->getConnection()->dropIndex(
+            $this->schemaSetup->getTable('vitalii_luka_regular_customer_request'),
+            $this->schemaSetup->getIdxName('vitalii_luka_regular_customer_request', ['email', 'website_id'], 'unique')
+        );
+        $this->schemaSetup->getConnection()->endSetup();
     }
 
     /**
