@@ -1,7 +1,7 @@
 define([
     'jquery',
     'jquery/ui'
-], function ($,  alert) {
+], function ($, alert) {
     'use strict';
 
     $.widget('vitaliiLuka.regularCustomerButton', {
@@ -15,6 +15,7 @@ define([
          * @private
          */
         _create: function () {
+            this.ajaxRequest();
             $(this.element).click(this.openRequestForm.bind(this));
             $(document).trigger('vitalii_luka_regular_customer_show_message');
         },
@@ -42,7 +43,7 @@ define([
                 url: this.options.url,
                 data: {
                     'isAjax': 1,
-                    productId: this.productId
+                    'product_id': this.options.productId
                 },
                 type: 'get',
                 dataType: 'json',
