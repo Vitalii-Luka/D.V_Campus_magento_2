@@ -3,7 +3,7 @@
 
 <?php /** @TODO: only logged in customers must be able to make a request. Show login form on button click */ ?>
 <button class="action primary" data-mage-init='{"vitaliiLukaRegularCustomerButton":{
-    "url": "<?= $escaper->escapeJs($block->getUrl('vitaliiluka_regular_customer/index/RequestProductID')) ?>",
+    "url": "<?= $escaper->escapeJs($block->getUrl('vitaliiluka_regular_customer/index/requestproductid')) ?>",
     "productId": "<?= $escaper->escapeJs((int) $block->getProduct()->getId()) ?>"
     }}'>
     <span><?= $escaper->escapeHtml(__('Participate in the program')) ?></span>

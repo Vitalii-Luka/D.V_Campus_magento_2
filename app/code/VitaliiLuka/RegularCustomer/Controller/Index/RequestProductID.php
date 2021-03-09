@@ -46,12 +46,12 @@ class RequestProductID implements \Magento\Framework\App\Action\HttpGetActionInt
     {
         $response = $this->jsonResponseFactory->create();
         $productList = $this->customerSession->getData('product_list');
-        $productId = $this->request->getParam('productId');
+        $productId = (int) $this->request->getParam('product_id');
 
-        $currentProductId = $productList && in_array($productId, $productList, true);
+        $requestSubmitted = $productList && in_array($productId, $productList, true);
 
         return $response->setData([
-            'currentProductId' => $currentProductId
+            'requestSubmitted' => $requestSubmitted
         ]);
     }
 }

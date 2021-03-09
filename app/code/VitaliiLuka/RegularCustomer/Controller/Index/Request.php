@@ -112,11 +112,11 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
                 ->setStatus(DiscountRequest::STATUS_PENDING);
             $this->discountRequestResource->save($discountRequest);
 
-            if (!$this->customerSession->isLoggedIn()) {
-                $this->customerSession->setDiscountRequestCustomerEmail($this->request->getParam('email'));
-                $productIds = $this->customerSession->getDiscountRequestProductIds() ?? [];
-                $productIds[] = $productId;
-                $this->customerSession->setDiscountRequestProductIds(array_unique($productIds));
+            if ($this->customerSession->isLoggedIn()) {
+                $productId = $this->request->getParam('productId');
+                $sessionProductList = (array)$this->customerSession->getData('product_list');
+                $sessionProductList[] = $productId;
+                $this->customerSession->setProductList($sessionProductList);
             }
 
             $formSaved = true;

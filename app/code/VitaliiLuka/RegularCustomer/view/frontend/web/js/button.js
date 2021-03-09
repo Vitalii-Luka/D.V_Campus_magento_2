@@ -1,6 +1,7 @@
 define([
     'jquery',
-    'jquery/ui'
+    'jquery/ui',
+    'Magento_Ui/js/modal/alert'
 ], function ($, alert) {
     'use strict';
 
@@ -17,7 +18,6 @@ define([
         _create: function () {
             this.ajaxRequest();
             $(this.element).click(this.openRequestForm.bind(this));
-            $(document).trigger('vitalii_luka_regular_customer_show_message');
         },
 
         /**
@@ -51,7 +51,9 @@ define([
 
                 /** @inheritdoc */
                 success: function (response) {
-                    if (response.result) {
+                    if (response.requestSubmitted) {
+                        this.openRequestForm();
+                    } else {
                         this.customerShowMessage();
                     }
                 },
