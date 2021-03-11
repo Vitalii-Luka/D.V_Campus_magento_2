@@ -52,8 +52,6 @@ define([
                 /** @inheritdoc */
                 success: function (response) {
                     if (response.requestSubmitted) {
-                        this.openRequestForm();
-                    } else {
                         this.customerShowMessage();
                     }
                 },

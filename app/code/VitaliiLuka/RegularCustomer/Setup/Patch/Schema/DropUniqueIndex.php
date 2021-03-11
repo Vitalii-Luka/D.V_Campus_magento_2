@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VitaliiLuka\RegularCustomer\Setup\Patch\Schema;
 
+use Magento\Framework\DB\Adapter\AdapterInterface;
+
 class DropUniqueIndex implements \Magento\Framework\Setup\Patch\SchemaPatchInterface
 {
     /**
@@ -33,7 +35,7 @@ class DropUniqueIndex implements \Magento\Framework\Setup\Patch\SchemaPatchInter
             $this->schemaSetup->getIdxName(
                 'vitalii_luka_regular_customer_request',
                 ['email', 'website_id'],
-                'INDEX_TYPE_UNIQUE'
+                AdapterInterface::INDEX_TYPE_UNIQUE
             )
         );
         $this->schemaSetup->getConnection()->endSetup();
