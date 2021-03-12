@@ -5,6 +5,9 @@
         <column xsi:type="int" name="discount_request_id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Discount Request ID"
         />
+        <column xsi:type="int" name="product_id"  padding="10" unsigned="true" nullable="true"
+                comment="Product ID"
+        />
         <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="true"
                 comment="Customer ID"
         />
@@ -32,6 +35,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="discount_request_id"/>
         </constraint>
+        <index referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
         <index referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_CUSTOMER_ID" indexType="btree">
             <column name="customer_id"/>
         </index>
@@ -41,10 +47,14 @@
         <index referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_ADMIN_USER_ID" indexType="btree">
             <column name="admin_user_id"/>
         </index>
-        <constraint xsi:type="unique" referenceId="VITALII_LUKA_REGULAR_CUSTOMER_REQUEST_EMAIL_WEBSITE_ID">
-            <column name="email"/>
-            <column name="website_id"/>
-        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="FK_F139F041DF5100B9F163152535D9B6D8"
+                    table="vitalii_luka_regular_customer_request"
+                    column="product_id"
+                    referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id"
+                    onDelete="SET NULL"
+        />
         <constraint xsi:type="foreign"
                     referenceId="FK_21990CEFD4E1C3D4ACE2B1661B3811A4"
                     table="vitalii_luka_regular_customer_request"

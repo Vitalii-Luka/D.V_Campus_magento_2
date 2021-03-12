@@ -35,6 +35,16 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
     private $storeManager;
 
     /**
+     * @var \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     */
+    private $formKeyValidator;
+
+    /**
+     * @var \Magento\Customer\Model\Session $customerSession
+     */
+    private $customerSession;
+
+    /**
      * @var \Psr\Log\LoggerInterface $logger
      */
     private $logger;
@@ -46,6 +56,8 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource
      * @param \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     * @param \Magento\Customer\Model\Session $customerSession
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -54,6 +66,8 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource,
         \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Magento\Customer\Model\Session $customerSession,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -61,6 +75,8 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         $this->discountRequestResource = $discountRequestResource;
         $this->discountRequestFactory = $discountRequestFactory;
         $this->storeManager = $storeManager;
+        $this->formKeyValidator = $formKeyValidator;
+        $this->customerSession = $customerSession;
         $this->logger = $logger;
     }
 
@@ -73,22 +89,46 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
     {
         $response = $this->jsonResponseFactory->create();
         // @TODO: pass message via notifications, not alert
-        // @TODO: add form key validation and hideIt validation
         // @TODO: add Google Recaptcha to the form
+        $formSaved = false;
 
         try {
+            if (!$this->formKeyValidator->validate($this->request)) {
+                throw new \InvalidArgumentException('Form key is not valid');
+            }
+
             /** @var DiscountRequest $discountRequest */
             $discountRequest = $this->discountRequestFactory->create();
-            $discountRequest->setName($this->request->getParam('name'))
+
+            $customerId = $this->customerSession->getCustomerId()
+                ? (int) $this->customerSession->getCustomerId() : null;
+
+            $productId = (int) $this->request->getParam('product_id');
+            $discountRequest->setProductId($productId)
+                ->setName($this->request->getParam('name'))
                 ->setEmail($this->request->getParam('email'))
-                ->setWebsiteId($this->storeManager->getStore()->getWebsiteId())
+                ->setCustomerId($customerId)
+                ->setWebsiteId((int) $this->storeManager->getStore()->getWebsiteId())
                 ->setStatus(DiscountRequest::STATUS_PENDING);
             $this->discountRequestResource->save($discountRequest);
-            $message = __('You request for product %1 was accepted!', $this->request->getParam('productName'));
+
+            if ($this->customerSession->isLoggedIn()) {
+                $productId = $this->request->getParam('productId');
+                $sessionProductList = (array)$this->customerSession->getData('product_list');
+                $sessionProductList[] = $productId;
+                $this->customerSession->setProductList($sessionProductList);
+            }
+
+            $formSaved = true;
+        } catch (\InvalidArgumentException $e) {
+            // No need to log form key validation errors
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            $message = __('Your request can\'t be sent. Please, contact us if you see this message.');
         }
+
+        $message = $formSaved
+            ? __('You request for product %1 was accepted!', $this->request->getParam('productName'))
+            : __('Your request can\'t be sent. Please, contact us if you see this message.');
 
         return $response->setData([
             'message' => $message

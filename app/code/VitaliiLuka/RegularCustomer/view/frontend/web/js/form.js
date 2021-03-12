@@ -2,14 +2,15 @@ define([
     'jquery',
     'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/modal/modal',
-    'mage/translate'
+    'mage/translate',
+    'mage/cookies'
 ], function ($, alert) {
     'use strict';
 
     $.widget('vitaliiLuka.regularCustomerForm', {
         options: {
             action: '',
-            productName: ''
+            productId: ''
         },
 
         /**
@@ -55,7 +56,7 @@ define([
         ajaxSubmit: function () {
             let formData = new FormData($(this.element).get(0));
 
-            formData.append('productName', this.options.productName);
+            formData.append('product_id', this.options.productId);
             formData.append('form_key', $.mage.cookies.get('form_key'));
             formData.append('isAjax', 1);
 

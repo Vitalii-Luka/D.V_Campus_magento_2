@@ -7,7 +7,7 @@
           method="post"
           data-mage-init='{"vitaliiLukaRegularCustomerForm":{
               "action": "<?= $escaper->escapeJs($block->getUrl('vitaliiluka_regular_customer/index/request')) ?>",
-              "productName": "<?= $escaper->escapeJs($block->getProduct()->getName()) ?>"
+              "productId": "<?= $escaper->escapeJs((int) $block->getProduct()->getId()) ?>"
           }}'
           onsubmit="return false;"
     >
