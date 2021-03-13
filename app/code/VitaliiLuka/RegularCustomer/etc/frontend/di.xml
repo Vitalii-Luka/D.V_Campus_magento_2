@@ -5,16 +5,16 @@
             <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
         </arguments>
     </type>
-    <type name="VitaliiLuka\RegularCustomer\Controller\Index\RequestProductID">
-        <arguments>
-            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
-        </arguments>
-    </type>
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
                 <item name="personal-discount" xsi:type="string">VitaliiLuka\RegularCustomer\CustomerData\DiscountRequests</item>
             </argument>
+        </arguments>
+    </type>
+    <type name="VitaliiLuka\RegularCustomer\CustomerData\DiscountRequests">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
         </arguments>
     </type>
 </config>

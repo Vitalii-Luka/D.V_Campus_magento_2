@@ -101,7 +101,8 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
             $discountRequest = $this->discountRequestFactory->create();
 
             $customerId = $this->customerSession->getCustomerId()
-                ? (int) $this->customerSession->getCustomerId() : null;
+                ? (int) $this->customerSession->getCustomerId()
+                : null;
 
             $productId = (int) $this->request->getParam('product_id');
             $discountRequest->setProductId($productId)
@@ -113,10 +114,11 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
             $this->discountRequestResource->save($discountRequest);
 
             if ($this->customerSession->isLoggedIn()) {
-                $productId = $this->request->getParam('productId');
-                $sessionProductList = (array)$this->customerSession->getData('product_list');
-                $sessionProductList[] = $productId;
-                $this->customerSession->setProductList($sessionProductList);
+                $this->customerSession->setDiscountRequestCustomerName($this->request->getParam('name'));
+                $this->customerSession->setDiscountRequestCustomerEmail($this->request->getParam('email'));
+                $productIds = $this->customerSession->getDiscountRequestProductIds() ?? [];
+                $productIds[] = $productId;
+                $this->customerSession->setDiscountRequestProductIds(array_unique($productIds));
             }
 
             $formSaved = true;

@@ -3,7 +3,7 @@
     <body>
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Text\ListText"
-                   name="vitalii.luka.regular.customer.tab"
+                   name="vitalii-luka-regular-customer-tab"
                    group="detailed_info"
             >
                 <arguments>
