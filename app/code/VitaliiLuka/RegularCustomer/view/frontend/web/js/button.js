@@ -18,6 +18,7 @@ define([
         _create: function () {
             this.ajaxRequest();
             $(this.element).click(this.openRequestForm.bind(this));
+            $(document).trigger('vitalii_luka_regular_customer_show_message');
         },
 
         /**
