@@ -1,23 +1,18 @@
 define([
     'jquery',
-    'jquery/ui',
-    'Magento_Ui/js/modal/alert'
-], function ($, alert) {
+    'jquery/ui'
+], function ($) {
     'use strict';
 
     $.widget('vitaliiLuka.regularCustomerButton', {
-        options: {
-            url: '',
-            productId: ''
-        },
 
         /**
          * Constructor
          * @private
          */
         _create: function () {
-            this.ajaxRequest();
             $(this.element).click(this.openRequestForm.bind(this));
+            $(document).trigger('vitalii_luka_regular_customer_show_message');
         },
 
         /**
@@ -33,37 +28,6 @@ define([
         customerShowMessage: function () {
             $(document).trigger('vitalii_luka_regular_customer_show_message');
             $(this.element).hide();
-        },
-
-        /**
-         * Submit request via AJAX. Add product id to the post data.
-         */
-        ajaxRequest: function () {
-            $.ajax({
-                url: this.options.url,
-                data: {
-                    'isAjax': 1,
-                    'product_id': this.options.productId
-                },
-                type: 'get',
-                dataType: 'json',
-                context: this,
-
-                /** @inheritdoc */
-                success: function (response) {
-                    if (response.requestSubmitted) {
-                        this.customerShowMessage();
-                    }
-                },
-
-                /** @inheritdoc */
-                error: function () {
-                    alert({
-                        title: $.mage.__('Error'),
-                        content: $.mage.__('Your request can\'t be sent. Please, contact us if you see this message.')
-                    });
-                }
-            });
         }
     });
 

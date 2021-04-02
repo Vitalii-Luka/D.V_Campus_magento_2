@@ -97,13 +97,13 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
                 throw new \InvalidArgumentException('Form key is not valid');
             }
 
+            $customerId = $this->customerSession->getCustomerId()
+                ? (int) $this->customerSession->getCustomerId()
+                : null;
+            $productId = (int) $this->request->getParam('product_id');
+
             /** @var DiscountRequest $discountRequest */
             $discountRequest = $this->discountRequestFactory->create();
-
-            $customerId = $this->customerSession->getCustomerId()
-                ? (int) $this->customerSession->getCustomerId() : null;
-
-            $productId = (int) $this->request->getParam('product_id');
             $discountRequest->setProductId($productId)
                 ->setName($this->request->getParam('name'))
                 ->setEmail($this->request->getParam('email'))
@@ -112,11 +112,12 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
                 ->setStatus(DiscountRequest::STATUS_PENDING);
             $this->discountRequestResource->save($discountRequest);
 
-            if ($this->customerSession->isLoggedIn()) {
-                $productId = $this->request->getParam('productId');
-                $sessionProductList = (array)$this->customerSession->getData('product_list');
-                $sessionProductList[] = $productId;
-                $this->customerSession->setProductList($sessionProductList);
+            if (!$this->customerSession->isLoggedIn()) {
+                $this->customerSession->setDiscountRequestCustomerName($this->request->getParam('name'));
+                $this->customerSession->setDiscountRequestCustomerEmail($this->request->getParam('email'));
+                $productIds = $this->customerSession->getDiscountRequestProductIds() ?? [];
+                $productIds[] = $productId;
+                $this->customerSession->setDiscountRequestProductIds(array_unique($productIds));
             }
 
             $formSaved = true;

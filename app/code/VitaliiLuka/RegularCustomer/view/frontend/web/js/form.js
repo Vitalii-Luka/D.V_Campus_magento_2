@@ -1,10 +1,11 @@
 define([
     'jquery',
+    'Magento_Customer/js/customer-data',
     'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/modal/modal',
     'mage/translate',
     'mage/cookies'
-], function ($, alert) {
+], function ($, customerData, alert) {
     'use strict';
 
     $.widget('vitaliiLuka.regularCustomerForm', {
@@ -23,6 +24,18 @@ define([
 
             $(document).on('vitalii_luka_regular_customer_form_open', this.openModal.bind(this));
             $(this.element).on('submit.vitalii_luka_regular_customer_form', this.sendRequest.bind(this));
+
+            this.updateCustomerData(customerData.get('personal-discount')())
+            customerData.get('personal-discount').subscribe(this.updateCustomerData.bind(this));
+        },
+
+        updateCustomerData: function (value) {
+            $(this.element).find('input[name="email"]').val(value.email);
+            if (value.productIds !== undefined &&
+                value.productIds.indexOf(this.options.productId) !== -1) {
+                $('#vitalii-luka-regular-customer-tab .action.primary').hide();
+                $(document).trigger('vitalii_luka_regular_customer_show_message');
+            }
         },
 
         /**

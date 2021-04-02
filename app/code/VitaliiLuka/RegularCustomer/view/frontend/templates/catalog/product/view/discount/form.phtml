@@ -1,4 +1,4 @@
-<?php /** @var \Magento\Catalog\Block\Product\View $block */ ?>
+<?php /** @var \VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequestForm $block */ ?>
 <?php /** @var \Magento\Framework\Escaper $escaper */ ?>
 <div style="display: none;">
     <form class="form"
@@ -7,7 +7,7 @@
           method="post"
           data-mage-init='{"vitaliiLukaRegularCustomerForm":{
               "action": "<?= $escaper->escapeJs($block->getUrl('vitaliiluka_regular_customer/index/request')) ?>",
-              "productId": "<?= $escaper->escapeJs((int) $block->getProduct()->getId()) ?>"
+              "productId": <?= (int) $escaper->escapeJs((int) $block->getProduct()->getId()) ?>
           }}'
           onsubmit="return false;"
     >

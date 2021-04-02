@@ -3,7 +3,7 @@
     <body>
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Text\ListText"
-                   name="vitalii.luka.regular.customer.tab"
+                   name="vitalii-luka-regular-customer-tab"
                    group="detailed_info"
             >
                 <arguments>
@@ -20,7 +20,7 @@
                        template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/button.phtml"
                        group="detailed_info"
                 />
-                <block class="Magento\Catalog\Block\Product\View"
+                <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequestForm"
                        name="vitalii.luka.regular.customer.form"
                        template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/form.phtml"
                        group="detailed_info"
