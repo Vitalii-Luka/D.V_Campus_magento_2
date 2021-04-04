@@ -27,10 +27,24 @@ define([
             this._super();
             this.observe(['customerName', 'customerEmail', 'hideIt']);
 
-            this.customerName.subscribe(function (newValue) {
-                console.log(newValue);
-            });
+            this.updatePersonalDiscountData(customerData.get('personal-discount')());
+            customerData.get('personal-discount').subscribe(this.updatePersonalDiscountData.bind(this));
+
             return this;
+        },
+
+        /**
+         * Update observable values with the ones from the localStorage
+         * @param {Object} personalDiscountData
+         */
+        updatePersonalDiscountData: function (personalDiscountData) {
+            if (personalDiscountData.hasOwnProperty('name')) {
+                this.customerName(personalDiscountData.name);
+            }
+
+            if (personalDiscountData.hasOwnProperty('email')) {
+                this.customerEmail(personalDiscountData.email);
+            }
         },
 
         /**
