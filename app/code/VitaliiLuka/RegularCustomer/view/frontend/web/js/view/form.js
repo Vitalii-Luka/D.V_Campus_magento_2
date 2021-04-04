@@ -12,71 +12,50 @@ define([
 
     return Component.extend({
         defaults: {
+            action: '',
             customerName: '',
             customerEmail: '',
+            hideIt: '',
+            productId: 0,
             template: 'VitaliiLuka_RegularCustomer/form'
         },
 
+        /**
+         * @returns {*}
+         */
         initObservable: function () {
             this._super();
-            this.observe(['customerName', 'customerEmail']);
+            this.observe(['customerName', 'customerEmail', 'hideIt']);
 
             this.customerName.subscribe(function (newValue) {
                 console.log(newValue);
             });
-
             return this;
         },
 
         /**
-         * Send form data to the server
+         * Initialize modal form
          */
-        sendPersonalDiscountRequest: function () {
-            console.log('Going to submit the form');
-        }
-    });
-
-    $.widget('vitaliiLuka.regularCustomerForm', {
-        options: {
-            action: '',
-            productId: ''
-        },
-
-        /**
-         * @private
-         */
-        _create: function () {
-            $(this.element).modal({
+        initModal: function (element) {
+            this.$form = $(element);
+            this.$modal = this.$form.modal({
                 buttons: []
             });
 
             $(document).on('vitalii_luka_regular_customer_form_open', this.openModal.bind(this));
-            $(this.element).on('submit.vitalii_luka_regular_customer_form', this.sendRequest.bind(this));
-
-            this.updateCustomerData(customerData.get('personal-discount')())
-            customerData.get('personal-discount').subscribe(this.updateCustomerData.bind(this));
-        },
-
-        updateCustomerData: function (value) {
-            $(this.element).find('input[name="email"]').val(value.email);
-            if (value.productIds !== undefined &&
-                value.productIds.indexOf(this.options.productId) !== -1) {
-                $('#vitalii-luka-regular-customer-tab .action.primary').hide();
-                $(document).trigger('vitalii_luka_regular_customer_show_message');
-            }
         },
 
         /**
          * Open modal dialog
          */
         openModal: function () {
-            $(this.element).modal('openModal');
+            this.$modal.modal('openModal');
         },
 
         /**
-         * Validate form and send request
+         * Send form data to the server
          */
-        sendRequest: function () {
+        sendPersonalDiscountRequest: function () {
             if (!this.validateForm()) {
                 return;
             }
@@ -88,24 +67,25 @@ define([
          * Validate request form
          */
         validateForm: function () {
-            return $(this.element).validation().valid();
+            return this.$form.validation().valid();
         },
 
         /**
          * Submit request via AJAX. Add form key to the post data.
          */
         ajaxSubmit: function () {
-            let formData = new FormData($(this.element).get(0));
-
-            formData.append('product_id', this.options.productId);
-            formData.append('form_key', $.mage.cookies.get('form_key'));
-            formData.append('isAjax', 1);
+            let payload = {
+                name: this.customerName(),
+                email: this.customerEmail(),
+                'product_id': this.productId,
+                'form_key': $.mage.cookies.get('form_key'),
+                isAjax: 1,
+                'hide_it': this.hideIt()
+            };
 
             $.ajax({
-                url: this.options.action,
-                data: formData,
-                processData: false,
-                contentType: false,
+                url: this.action,
+                data: payload,
                 type: 'post',
                 dataType: 'json',
                 context: this,
@@ -117,7 +97,6 @@ define([
 
                 /** @inheritdoc */
                 success: function (response) {
-                    $(this.element).modal('closeModal');
                     alert({
                         title: $.mage.__('Success'),
                         content: response.message
@@ -135,10 +114,10 @@ define([
 
                 /** @inheritdoc */
                 complete: function () {
+                    this.$modal.modal('closeModal');
                     $('body').trigger('processStop');
                 }
             });
         }
     });
-
 });

@@ -3,7 +3,7 @@
       id="vitalii-luka-regular-customer-form"
       method="post"
       onsubmit="return false;"
-      data-bind="submit: sendPersonalDiscountRequest"
+      data-bind="submit: sendPersonalDiscountRequest, afterRender: initModal"
 >
     <fieldset class="fieldset">
         <legend class="legend">
@@ -51,7 +51,7 @@
     </fieldset>
     <div class="actions-toolbar">
         <div class="primary">
-            <input type="hidden" name="hideit" id="hideit" value=""/>
+            <input type="hidden" name="hideit" id="hideit" data-bind="value: hideIt" value=""/>
             <button type="submit"
                     data-bind="
                             attr: {
