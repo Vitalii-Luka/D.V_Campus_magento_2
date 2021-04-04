@@ -3,11 +3,10 @@ define([
     'ko',
     'uiComponent',
     'Magento_Customer/js/customer-data',
-    'Magento_Ui/js/modal/alert',
+    'vitaliiLukaRegularCustomerSubmitForm',
     'Magento_Ui/js/modal/modal',
-    'mage/translate',
     'mage/cookies'
-], function ($, ko, Component, customerData, alert) {
+], function ($, ko, Component, customerData, submitFormAction) {
     'use strict';
 
     return Component.extend({
@@ -48,7 +47,8 @@ define([
         },
 
         /**
-         * Initialize modal form
+         * Initialize modal window on form
+         * @param element
          */
         initModal: function (element) {
             this.$form = $(element);
@@ -97,41 +97,10 @@ define([
                 'hide_it': this.hideIt()
             };
 
-            $.ajax({
-                url: this.action,
-                data: payload,
-                type: 'post',
-                dataType: 'json',
-                context: this,
-
-                /** @inheritdoc */
-                beforeSend: function () {
-                    $('body').trigger('processStart');
-                },
-
-                /** @inheritdoc */
-                success: function (response) {
-                    alert({
-                        title: $.mage.__('Success'),
-                        content: response.message
-                    });
-                },
-
-                /** @inheritdoc */
-                error: function () {
-                    alert({
-                        title: $.mage.__('Error'),
-                        /*eslint max-len: ["error", { "ignoreStrings": true }]*/
-                        content: $.mage.__('Your request can\'t be sent. Please, contact us if you see this message.')
-                    });
-                },
-
-                /** @inheritdoc */
-                complete: function () {
+            submitFormAction(payload, this.action)
+                .done(function () {
                     this.$modal.modal('closeModal');
-                    $('body').trigger('processStop');
-                }
-            });
+                }.bind(this));
         }
     });
 });
