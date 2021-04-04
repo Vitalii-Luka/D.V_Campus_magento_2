@@ -1,7 +1,21 @@
-<?php /** @var \VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequestForm $block */ ?>
+<?php /** @var \VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest $block */ ?>
 <?php /** @var \Magento\Framework\Escaper $escaper */ ?>
 
-<?php /** @TODO: only logged in customers must be able to make a request. Show login form on button click */ ?>
-<button class="action primary" data-mage-init='{"vitaliiLukaRegularCustomerButton":{}}'>
-    <span><?= $escaper->escapeHtml(__('Participate in the program')) ?></span>
-</button>
+<div data-bind="scope: 'personalDiscountRequestButton'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "personalDiscountRequestButton": {
+                        "component": "vitaliiLukaRegularCustomerButton",
+                        "productId": <?= (int) $block->getProduct()->getId() ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

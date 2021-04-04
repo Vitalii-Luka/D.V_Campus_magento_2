@@ -55,6 +55,8 @@ class DiscountRequests implements \Magento\Customer\CustomerData\SectionSourceIn
             $discountRequestCollection = $this->discountRequestCollectionFactory->create();
             $discountRequestCollection->addFieldToFilter('customer_id', $this->customerSession->getCustomerId());
             $productIds = $discountRequestCollection->getColumnValues('product_id');
+            $productIds = array_unique($productIds);
+            $productIds = array_values(array_map('intval', $productIds));
         } else {
             $productIds = $this->customerSession->getDiscountRequestProductIds();
         }
