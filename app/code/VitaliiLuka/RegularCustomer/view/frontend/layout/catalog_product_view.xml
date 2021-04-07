@@ -15,19 +15,14 @@
                         <argument name="block_id" xsi:type="string">loyalty_program_for_regular_customers_cms_block</argument>
                     </arguments>
                 </block>
-                <block class="Magento\Catalog\Block\Product\View"
-                       name="vitalii.luka.regular.customer.button"
+                <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest"
+                       name="vitalii-luka-regular-customer-button"
                        template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/button.phtml"
                        group="detailed_info"
                 />
-                <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequestForm"
-                       name="vitalii.luka.regular.customer.form"
+                <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest"
+                       name="vitalii-luka-regular-customer-form"
                        template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/form.phtml"
-                       group="detailed_info"
-                />
-                <block class="Magento\Catalog\Block\Product\View"
-                       name="requested.message"
-                       template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/message.phtml"
                        group="detailed_info"
                 />
             </block>

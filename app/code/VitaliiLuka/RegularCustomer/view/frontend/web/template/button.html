@@ -1,0 +1,7 @@
+<button class="action primary" data-bind="click: openRequestForm, visible: !requestAlreadySent()">
+    <span translate="'Participate in the program'"></span>
+</button>
+
+<div class="message-success success message" data-bind="visible: requestAlreadySent()">
+    <span translate="'Already requested!'"></span>
+</div>
