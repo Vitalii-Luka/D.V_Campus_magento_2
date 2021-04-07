@@ -1,21 +1,13 @@
-<?php /** @var \VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest $block */ ?>
+<?php /** @var \Magento\Catalog\Block\Product\View $block */ ?>
 <?php /** @var \Magento\Framework\Escaper $escaper */ ?>
-
 <div data-bind="scope: 'personalDiscountRequestButton'">
     <!-- ko template: getTemplate() --><!-- /ko -->
-</div>
 
-<script type="text/x-magento-init">
-    {
-        "*": {
-            "Magento_Ui/js/core/app": {
-                "components": {
-                    "personalDiscountRequestButton": {
-                        "component": "vitaliiLukaRegularCustomerButton",
-                        "productId": <?= (int) $block->getProduct()->getId() ?>
-                    }
-                }
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
             }
         }
-    }
-</script>
+    </script>
+</div>
