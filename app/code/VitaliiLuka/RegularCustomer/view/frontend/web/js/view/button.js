@@ -3,22 +3,33 @@ define([
     'ko',
     'uiComponent',
     'Magento_Customer/js/customer-data',
+    'Magento_Customer/js/model/authentication-popup',
+    'Magento_Customer/js/action/login',
     'vitaliiLukaRegularCustomerForm'
-], function ($, ko, Component, customerData) {
+], function ($, ko, Component, customerData, authenticationPopup, loginAction) {
     'use strict';
 
     return Component.extend({
         defaults: {
             productId: 0,
+            allowForGuests: !!customerData.get('personal-discount')().allowForGuests,
             requestAlreadySent: false,
-            template: 'VitaliiLuka_RegularCustomer/button'
+            template: 'VitaliiLuka_RegularCustomer/button',
+            personalDiscount: customerData.get('personal-discount')
         },
 
         /**
          * @returns {*}
          */
-        initObservable: function () {
-            this._super().observe(['requestAlreadySent']);
+        initialize: function () {
+            loginAction.registerLoginCallback(function () {
+                customerData.invalidate(['*']);
+            });
+
+            this._super();
+
+            this.checkRequestAlreadySent(this.personalDiscount());
+            this.openRequestFormAfterSectionReload = false;
 
             return this;
         },
@@ -26,11 +37,8 @@ define([
         /**
          * @returns {*}
          */
-        initLinks: function () {
-            this._super();
-
-            this.checkRequestAlreadySent(customerData.get('personal-discount')());
-            customerData.get('personal-discount').subscribe(this.checkRequestAlreadySent.bind(this));
+        initObservable: function () {
+            this._super().observe(['requestAlreadySent', 'allowForGuests']);
 
             return this;
         },
@@ -39,7 +47,16 @@ define([
          * Generate event to open the form
          */
         openRequestForm: function () {
-            $(document).trigger('vitalii_luka_regular_customer_form_open');
+            if (Object.keys(this.personalDiscount()).length > 0) {
+                if (this.allowForGuests() || !!this.personalDiscount().isLoggedIn) {
+                    $(document).trigger('vitalii_luka_regular_customer_form_open');
+                } else {
+                    authenticationPopup.showModal();
+                }
+            } else {
+                this.openRequestFormAfterSectionReload = true;
+                customerData.reload(['personal-discount']);
+            }
         },
 
         /**
@@ -51,6 +68,15 @@ define([
             ) {
                 this.requestAlreadySent(true);
             }
+
+            this.allowForGuests(!!personalDiscountData.allowForGuests);
+
+            if (this.openRequestFormAfterSectionReload) {
+                this.openRequestFormAfterSectionReload = false;
+                this.openRequestForm();
+            }
+
+            return personalDiscountData;
         }
     });
 });

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace VitaliiLuka\RegularCustomer\CustomerData;
@@ -8,33 +7,34 @@ use VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\Collection a
 
 class DiscountRequests implements \Magento\Customer\CustomerData\SectionSourceInterface
 {
-    /**
-     * @var \Magento\Customer\Model\Session $customerSession
-     */
-    private $customerSession;
+    private \Magento\Customer\Model\Session $customerSession;
 
-    /**
-     * @var \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $discountRequestCollectionFactory
-     */
-    private $discountRequestCollectionFactory;
+    private \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory
+        $discountRequestCollectionFactory;
+
+    private \VitaliiLuka\RegularCustomer\Model\Config $config;
 
     /**
      * DiscountRequests constructor.
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $discountRequestCollectionFactory
+     * @param \VitaliiLuka\RegularCustomer\Model\Config $config
      */
     public function __construct(
         \Magento\Customer\Model\Session $customerSession,
-        \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $discountRequestCollectionFactory
+        \VitaliiLuka\RegularCustomer\Model\Config $config,
+        \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory
+        $discountRequestCollectionFactory
     ) {
         $this->customerSession = $customerSession;
         $this->discountRequestCollectionFactory = $discountRequestCollectionFactory;
+        $this->config = $config;
     }
 
     /**
-     * @return array|void
+     * @return array
      */
-    public function getSectionData(): ?array
+    public function getSectionData(): array
     {
         $name = (string) $this->customerSession->getDiscountRequestCustomerName();
         $email = (string) $this->customerSession->getDiscountRequestCustomerEmail();
@@ -47,24 +47,22 @@ class DiscountRequests implements \Magento\Customer\CustomerData\SectionSourceIn
             if (!$email) {
                 $email = $this->customerSession->getCustomer()->getEmail();
             }
-
-            $customerName = $this->customerSession->getCustomer()->getName();
-            $customerEmail = $this->customerSession->getCustomer()->getEmail();
-
-            /** @var DiscountRequestCollection $discountRequestCollection */
+        /** @var DiscountRequestCollection $discountRequestCollection */
             $discountRequestCollection = $this->discountRequestCollectionFactory->create();
             $discountRequestCollection->addFieldToFilter('customer_id', $this->customerSession->getCustomerId());
             $productIds = $discountRequestCollection->getColumnValues('product_id');
             $productIds = array_unique($productIds);
             $productIds = array_values(array_map('intval', $productIds));
         } else {
-            $productIds = $this->customerSession->getDiscountRequestProductIds();
+            $productIds = (array) $this->customerSession->getDiscountRequestProductIds();
         }
 
         return [
             'name' => $name,
             'email' => $email,
-            'productIds' => $productIds
+            'productIds' => $productIds,
+            'isLoggedIn' => $this->customerSession->isLoggedIn(),
+            'allowForGuests' => $this->config->allowForGuests()
         ];
     }
 }
