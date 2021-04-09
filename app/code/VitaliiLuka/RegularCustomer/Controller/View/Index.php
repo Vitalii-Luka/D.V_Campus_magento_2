@@ -43,16 +43,14 @@ class Index extends \Magento\Framework\App\Action\Action implements \Magento\Fra
     /**
      * Check customer authentication for some actions
      *
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws \Magento\Framework\Exception\NotFoundException
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @return \Magento\Framework\App\ResponseInterface
      */
-    public function dispatch(RequestInterface $request): ResponseInterface
+    public function dispatch(RequestInterface $request)
     {
-        if ($this->config->enabled() && !$this->customerSession->authenticate()) {
-            $this->_actionFlag->set('', 'no-dispatch', true);
+        if (!$this->customerSession->authenticate()) {
+            $this->_actionFlag->set('', self::FLAG_NO_DISPATCH, true);
         }
-
         return parent::dispatch($request);
     }
 
