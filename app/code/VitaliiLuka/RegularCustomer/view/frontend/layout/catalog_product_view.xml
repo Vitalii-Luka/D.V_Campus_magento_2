@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Text\ListText"
@@ -10,21 +11,49 @@
                     <argument name="sort_order" xsi:type="string">40</argument>
                     <argument translate="true" name="title" xsi:type="string">Loyalty program for Regular Customers</argument>
                 </arguments>
-                <block class="Magento\Cms\Block\Block" name="loyalty-program-customers-cms-block" before="-">
+                <block class="Magento\Cms\Block\Block"
+                       name="loyalty-program-customers-cms-block"
+                       before="-"
+                >
                     <arguments>
                         <argument name="block_id" xsi:type="string">loyalty_program_for_regular_customers_cms_block</argument>
                     </arguments>
                 </block>
                 <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest"
-                       name="vitalii-luka-regular-customer-button"
-                       template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/button.phtml"
+                       name="vitalii-luka-regular-customer-tab-content"
+                       template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/regular_customer_request.phtml"
                        group="detailed_info"
-                />
-                <block class="VitaliiLuka\RegularCustomer\Block\Product\View\DiscountRequest"
-                       name="vitalii-luka-regular-customer-form"
-                       template="VitaliiLuka_RegularCustomer::catalog/product/view/discount/form.phtml"
-                       group="detailed_info"
-                />
+                >
+                    <arguments>
+                        <argument name="cache_lifetime" xsi:type="number">84600</argument>
+                        <argument name="jsLayout" xsi:type="array">
+                            <item name="components" xsi:type="array">
+                                <item name="regularCustomersRequestTab" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="regularCustomerRequestButton" xsi:type="array">
+                                            <item name="component" xsi:type="string">vitaliiLukaRegularCustomerButton</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="productId" xsi:type="string">regularCustomersRequestTab.regularCustomerRequestForm:productId</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="regularCustomerRequestForm" xsi:type="array">
+                                            <item name="component" xsi:type="string">vitaliiLukaRegularCustomerForm</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="action" xsi:type="url"
+                                                      path="vitaliiluka_regular_customer/index/request"/>
+                                                <item name="productId" xsi:type="helper"
+                                                      helper="VitaliiLuka\RegularCustomer\Helper\CurrentProduct::getCurrentProductId"/>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
             </block>
         </referenceBlock>
     </body>

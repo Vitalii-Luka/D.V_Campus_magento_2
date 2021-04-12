@@ -2,7 +2,8 @@ define([
     'jquery',
     'ko',
     'uiComponent',
-    'Magento_Customer/js/customer-data'
+    'Magento_Customer/js/customer-data',
+    'vitaliiLukaRegularCustomerForm'
 ], function ($, ko, Component, customerData) {
     'use strict';
 
@@ -18,6 +19,15 @@ define([
          */
         initObservable: function () {
             this._super().observe(['requestAlreadySent']);
+
+            return this;
+        },
+
+        /**
+         * @returns {*}
+         */
+        initLinks: function () {
+            this._super();
 
             this.checkRequestAlreadySent(customerData.get('personal-discount')());
             customerData.get('personal-discount').subscribe(this.checkRequestAlreadySent.bind(this));
