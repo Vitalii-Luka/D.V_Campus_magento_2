@@ -10,32 +10,32 @@ use Magento\Framework\Phrase;
 
 class PersonalDiscountInfo extends \Magento\Framework\View\Element\Template
 {
-    /**
-     * @var \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $collectionFactorys
-     */
-    private $collectionFactory;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface $storeManager
-     */
-    private $storeManager;
+    private \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $collectionFactory;
+
+    private \Magento\Store\Model\StoreManagerInterface $storeManager;
+
+    private \Magento\Customer\Model\Session $customerSession;
 
     /**
      * PersonalDiscountInfo constructor.
      * @param \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $collectionFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magento\Customer\Model\Session $customerSession
      * @param array $data
      */
     public function __construct(
         \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest\CollectionFactory $collectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\View\Element\Template\Context $context,
+        \Magento\Customer\Model\Session $customerSession,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->collectionFactory = $collectionFactory;
         $this->storeManager = $storeManager;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -45,8 +45,7 @@ class PersonalDiscountInfo extends \Magento\Framework\View\Element\Template
     {
         /** @var DiscountRequestCollection $collection */
         $collection = $this->collectionFactory->create();
-        // @TODO: get current customer's ID
-        $collection->addFieldToFilter('email', 'john-doe@example.com');
+        $collection->addFieldToFilter('customer_id', (int)$this->customerSession->getCustomer()->getId());
         // @TODO: check if accounts are shared or not
         $collection->addFieldToFilter('website_id', $this->storeManager->getStore()->getWebsiteId());
         /** @var DiscountRequest $discountRequest */

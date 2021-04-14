@@ -4,50 +4,28 @@ declare(strict_types=1);
 
 namespace VitaliiLuka\RegularCustomer\Controller\Index;
 
-use Magento\Framework\Controller\Result\Json as JsonResponse;
 use VitaliiLuka\RegularCustomer\Model\DiscountRequest;
+use Magento\Framework\Controller\Result\Json as JsonResponse;
 
 class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
-    /**
-     * @var \Magento\Framework\App\RequestInterface $request
-     */
-    private $request;
+    private \Magento\Framework\App\RequestInterface $request;
 
-    /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory $jsonResponseFactory
-     */
-    private $jsonResponseFactory;
+    private \Magento\Framework\Controller\Result\JsonFactory $jsonResponseFactory;
 
-    /**
-     * @var \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource
-     */
-    private $discountRequestResource;
+    private \VitaliiLuka\RegularCustomer\Model\ResourceModel\DiscountRequest $discountRequestResource;
 
-    /**
-     * @var \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory
-     */
-    private $discountRequestFactory;
+    private \VitaliiLuka\RegularCustomer\Model\DiscountRequestFactory $discountRequestFactory;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface $storeManager
-     */
-    private $storeManager;
+    private \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    /**
-     * @var \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
-     */
-    private $formKeyValidator;
+    private \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator;
 
-    /**
-     * @var \Magento\Customer\Model\Session $customerSession
-     */
-    private $customerSession;
+    private \Magento\Customer\Model\Session $customerSession;
 
-    /**
-     * @var \Psr\Log\LoggerInterface $logger
-     */
-    private $logger;
+    private \VitaliiLuka\RegularCustomer\Model\Config $config;
+
+    private \Psr\Log\LoggerInterface $logger;
 
     /**
      * Controller constructor.
@@ -58,8 +36,10 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \VitaliiLuka\RegularCustomer\Model\Config $config
      * @param \Psr\Log\LoggerInterface $logger
      */
+
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Controller\Result\JsonFactory $jsonResponseFactory,
@@ -68,6 +48,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Customer\Model\Session $customerSession,
+        \VitaliiLuka\RegularCustomer\Model\Config $config,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -77,6 +58,7 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         $this->storeManager = $storeManager;
         $this->formKeyValidator = $formKeyValidator;
         $this->customerSession = $customerSession;
+        $this->config = $config;
         $this->logger = $logger;
     }
 
@@ -93,6 +75,16 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
         $formSaved = false;
 
         try {
+            if (!$this->config->enabled()) {
+                throw new \BadMethodCallException('Personal Discount requested, but the request can\'t be handled');
+            }
+
+            if (!$this->customerSession->isLoggedIn()
+                && !$this->config->allowForGuests()
+            ) {
+                throw new \BadMethodCallException('Personal Discount requested, but the request can\'t be handled');
+            }
+
             if (!$this->formKeyValidator->validate($this->request)) {
                 throw new \InvalidArgumentException('Form key is not valid');
             }
@@ -100,13 +92,22 @@ class Request implements \Magento\Framework\App\Action\HttpPostActionInterface
             $customerId = $this->customerSession->getCustomerId()
                 ? (int) $this->customerSession->getCustomerId()
                 : null;
+
+            if ($this->customerSession->isLoggedIn()) {
+                $name = $this->customerSession->getCustomer()->getName();
+                $email = $this->customerSession->getCustomer()->getEmail();
+            } else {
+                $name = $this->request->getParam('name');
+                $email = $this->request->getParam('email');
+            }
+
             $productId = (int) $this->request->getParam('product_id');
 
             /** @var DiscountRequest $discountRequest */
             $discountRequest = $this->discountRequestFactory->create();
             $discountRequest->setProductId($productId)
-                ->setName($this->request->getParam('name'))
-                ->setEmail($this->request->getParam('email'))
+                ->setName($name)
+                ->setEmail($email)
                 ->setCustomerId($customerId)
                 ->setWebsiteId((int) $this->storeManager->getStore()->getWebsiteId())
                 ->setStatus(DiscountRequest::STATUS_PENDING);

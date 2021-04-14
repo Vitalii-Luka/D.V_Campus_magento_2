@@ -1,17 +1,24 @@
-"pending","очікує розгляду"
-"approved","затверджено"
-"declined","відхилено"
+pending,очікує розгляду
+approved,затверджено
+declined,відхилено
 "You request for product %1 was accepted!","Ваш запит на продукт %1 було прийнято!"
 "Your request can't be sent. Please, contact us if you see this message.","Ваш запит не може бути відправлено. Будь ласка, зв'яжіться з нами, якщо побачите це повідомлення."
-"Participate in the program","Участь у програмі"
-"Already requested!","Запит відправлено!"
 "Request status:","Статус запиту:"
 "No discount request","Відсутній запит на знижку"
+"Participate in the program","Участь у програмі"
+"Already requested!","Запит відправлено!"
 "Discount Request","Запит на знижку"
 Name,Ім'я
 Email,Електронна адреса
 "Request a Discount","Відправити запит"
-"Success","Відправлено"
-"Error","Помилка"
+"Your Name","Ваше ім'я"
+"Your Email","Ваша електронна адреса"
+Success,Відправлено
+Error,Помилка
+"Personal Discount","Персональна знижка"
+"General Settings","Загальні налаштування"
+"Settings per store view are not available","Налаштування для окремих вітрин не доступні"
+Enabled,Увімкнено
+"Allow for Guests","Дозволено для Гостей"
+"Allow guests to submit discount requests","Незареєстровані користувачі можуть відправляти запити на знижку"
 "Loyalty program for Regular Customers","Програма лояльності для постійних клієнтів"
-"Personal Discount","Особиста знижка"
