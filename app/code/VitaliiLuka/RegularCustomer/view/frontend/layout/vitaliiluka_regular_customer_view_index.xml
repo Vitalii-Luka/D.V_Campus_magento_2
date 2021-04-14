@@ -10,6 +10,7 @@
                    name="personal.discount"
                    template="VitaliiLuka_RegularCustomer::customer/account/view.phtml"
                    cacheable="false"
+                   ifconfig="vitalii_luka_personal_discount/general/enabled"
             />
         </referenceContainer>
     </body>

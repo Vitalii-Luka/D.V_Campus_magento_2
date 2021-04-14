@@ -4,6 +4,7 @@
         <referenceBlock name="customer_account_navigation">
             <block class="Magento\Customer\Block\Account\SortLinkInterface"
                    name="customer-account-navigation-personal-discount"
+                   ifconfig="vitalii_luka_personal_discount/general/enabled"
             >
                 <arguments>
                     <argument name="path" xsi:type="string">vitaliiluka_regular_customer/view/index</argument>

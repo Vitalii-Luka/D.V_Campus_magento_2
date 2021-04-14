@@ -10,8 +10,8 @@
             <span translate="'Discount Request'"></span>
         </legend>
         <br/>
-        <div class="field name required">
-            <label class="label" for="name">
+        <div class="field name required" data-bind="visible: !isLoggedIn()">
+            <label class="label" for="VitaliiLuka-regular-customer-name">
                 <span translate="'Name'"></span>
             </label>
             <div class="control">
@@ -20,17 +20,18 @@
                        data-bind="
                             value: customerName,
                             attr: {
-                                title: $t('Name')
-                                }
-                            "
+                                title: $t('Name'),
+                                placeholder: $t('Your Name'),
+                            }
+                       "
                        class="input-text"
                        type="text"
-                       data-validate="{required:true}"
+                       data-validate="{ required: true }"
                 />
             </div>
         </div>
-        <div class="field email required">
-            <label class="label" for="email">
+        <div class="field email required" data-bind="visible: !isLoggedIn()">
+            <label class="label" for="VitaliiLuka-regular-customer-email">
                 <span translate="'Email'"></span>
             </label>
             <div class="control">
@@ -39,12 +40,13 @@
                        data-bind="
                             value: customerEmail,
                             attr: {
-                                title: $t('Email')
-                                }
-                            "
+                                title: $t('Email'),
+                                placeholder: $t('Your Email'),
+                            }
+                       "
                        class="input-text"
                        type="email"
-                       data-validate="{required:true, 'validate-email':true}"
+                       data-validate="{ required: true, 'validate-email': true }"
                 />
             </div>
         </div>
