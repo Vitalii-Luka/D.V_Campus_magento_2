@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="VitaliiLuka_RegularCustomer::general"
+             title="{Vitalii Luka}"
+             module="VitaliiLuka_RegularCustomer"
+             sortOrder="100"
+             parent="Magento_Backend::marketing"
+             resource="VitaliiLuka_RegularCustomer::general"
+        />
+        <add id="VitaliiLuka_RegularCustomer::listing"
+             title="Regular Customers"
+             translate="title"
+             module="VitaliiLuka_RegularCustomer"
+             sortOrder="100"
+             parent="VitaliiLuka_RegularCustomer::general"
+             action="vitaliiluka_regular_customer/discount/index"
+             resource="VitaliiLuka_RegularCustomer::listing"
+        />
+    </menu>
+</config>
